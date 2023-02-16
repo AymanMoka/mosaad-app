@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 export class OrdersComponent implements OnInit {
 
   orders!: Orders[];
+  spinner = false;
 
   constructor(private ordersService: OrdersService , private router:Router) { }
 
@@ -22,8 +23,10 @@ export class OrdersComponent implements OnInit {
   }
 
   getAllOrders() {
+   this.spinner = true; // show the spinner
     this.ordersService.getAllOrders().subscribe((data) => { // get the data from the service
       this.orders = data; // assign the data to the orders array
+      this.spinner = false; // hide the spinner
     })
   }
 
