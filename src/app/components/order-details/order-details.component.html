@@ -1,0 +1,64 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12" *ngFor="let item of orders">
+      <div class="card text-black bg-white mt-2 text-center fw-bold">
+        <div class="card-body">
+          <h3 class="card-title">
+            {{ timeAgo(item.date_created) }}
+          </h3>
+          <h4 class="card-title">
+            <span class="desc">الاسم : </span>{{ item.name }}
+          </h4>
+          <p class="card-text">
+            <span class="desc">العنوان : </span>{{ item.address }}
+          </p>
+          <p class="card-text">
+            <span class="desc">رقم الجوال : </span>{{ item.phone }}
+          </p>
+          <p class="card-text">
+            <span class="desc">طريقة تأكيد الطلب : </span
+            >{{ item.order_confirmation_method }}
+          </p>
+          <p class="card-text">
+            <span class="desc">طريقة الدفع : </span>{{ item.payment_method }}
+          </p>
+         <!-- item in cart  -->
+          <div *ngFor="let data of item.cart.item">
+            <p class="card-text">
+              <span class="desc">نوع الذبح : </span>
+              {{ data.alive_delivery_form ? "حي" : "مذبوح" }}
+            </p>
+            <p class="card-text">
+              <span class="desc">الحجم المطلوب : </span>
+              {{ data.product.name }}
+            </p>
+            <p class="card-text">
+              <span class="desc">السعر : </span>
+              {{ data.product.price | currency }}
+            </p>
+            <p class="card-text" *ngFor="let option of data.variants">
+              <span class="desc"> {{ option.option_name.name }}</span> :
+              {{ option.option_value.value }}
+            </p>
+            <p class="card-text" *ngIf="data.notes">
+              <span class="desc">الملاحظات : </span> {{ data.notes }}
+            </p>
+          </div>
+          <p class="card-text mt-2">
+            <span class="desc">السعر الكلي : </span
+            >{{ item.cart.total_amount | currency }}
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- spinner  -->
+    <div  
+      class="d-flex justify-content-center align-items-center"
+      *ngIf="orders.length == 0"
+    >
+      <div class="spinner-grow" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  </div>
+</div>
